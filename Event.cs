@@ -8,11 +8,15 @@ namespace csharp_gestore_eventi
 {
     public class Event
     {
+        string title;
+        DateTime date;
+        int maxCapacity;
+        int reserved;
         public string Title 
         {
             get
             {
-                return this.Title;
+                return this.title;
             }
             set
             {
@@ -21,14 +25,14 @@ namespace csharp_gestore_eventi
                     throw new ArgumentException("title cannot be an empty string");
 
                 }
-                this.Title = value;
+                this.title = value;
             }
         }
         public DateTime Date 
         {
             get
             {
-                return this.Date;
+                return this.date;
             }
             set
             {
@@ -37,14 +41,14 @@ namespace csharp_gestore_eventi
                     throw new ArgumentException("cannot set date as passed date");
                     
                 }
-                this.Date = value;
+                this.date = value;
             }
         }
         public int MaxCapacity 
         {
             get
             {
-                return this.MaxCapacity;
+                return this.maxCapacity;
             } 
             private set
             {
@@ -53,7 +57,7 @@ namespace csharp_gestore_eventi
                     throw new ArgumentException("max capacity must be a positive value");
 
                 }
-                this.MaxCapacity = value;
+                this.maxCapacity = value;
             } 
         }
         public int Reserved { get; private set; } 
