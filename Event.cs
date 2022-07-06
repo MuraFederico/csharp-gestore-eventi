@@ -16,14 +16,12 @@ namespace csharp_gestore_eventi
             }
             set
             {
-                if(value.Trim() != "")
-                {
-                    this.Title = value;
-                }
-                else
+                if (value == "")
                 {
                     throw new ArgumentException("title cannot be an empty string");
+
                 }
+                this.Title = value;
             }
         }
         public DateTime Date 
@@ -34,14 +32,12 @@ namespace csharp_gestore_eventi
             }
             set
             {
-                if(value > DateTime.Now)
-                {
-                    this.Date = value;
-                }
-                else
+                if(value < DateTime.Now)
                 {
                     throw new ArgumentException("cannot set date as passed date");
+                    
                 }
+                this.Date = value;
             }
         }
         public int MaxCapacity 
@@ -52,23 +48,22 @@ namespace csharp_gestore_eventi
             } 
             private set
             {
-                if(value > 0)
-                {
-                    this.MaxCapacity = value;
-                }
-                else
+                if(value <= 0)
                 {
                     throw new ArgumentException("max capacity must be a positive value");
+
                 }
+                this.MaxCapacity = value;
             } 
         }
-        public int Reserved { get; private set; } = 0;
+        public int Reserved { get; private set; } 
 
         public Event(string title, DateTime date, int capacity)
         {
             this.Title = title;
             this.Date = date;
             this.MaxCapacity = capacity;
+            this.Reserved = 0;
         }
 
         public void Reserve(int amount)
@@ -97,7 +92,7 @@ namespace csharp_gestore_eventi
         }
         public override string ToString()
         {
-            return $"{Date.ToString("dd/MM/yyyy")} - {Title}";
+            return $"{this.Date.ToString("dd/MM/yyyy")} - {Title}";
         }
     }
 }
