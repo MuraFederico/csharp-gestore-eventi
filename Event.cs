@@ -94,6 +94,12 @@ namespace csharp_gestore_eventi
             }
             this.Reserved-= amount;
         }
+
+        public void PrintSeats()
+        {
+            Console.WriteLine($"numero posti prenotati: {this.Reserved}\n" +
+                              $"numero posti disponibili: {this.MaxCapacity - this.Reserved}");
+        }
         public override string ToString()
         {
             return $"{this.Date.ToString("dd/MM/yyyy")} - {Title}";
