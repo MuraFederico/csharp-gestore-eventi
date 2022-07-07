@@ -1,14 +1,43 @@
 ﻿using csharp_gestore_eventi;
 
 
+ManageEvents program = CreateProgram();
 
 
-Event newEvent = CreateEvent();
+Console.WriteLine("How many events do you want to add? ");
+int numerEvents = int.Parse(Console.ReadLine());
 
-MakeReservation(newEvent);
+int i = 0;
 
-IsCancelling(newEvent);
+while (i < numerEvents)
+{
 
+    Event newEvent = CreateEvent();
+
+    MakeReservation(newEvent);
+
+    IsCancelling(newEvent);
+
+    program.AddEvent(newEvent);
+
+    i++;
+}
+
+Console.WriteLine($"number of events: {program.events.Count}\n");
+
+Console.WriteLine(program.ToString());
+
+Console.WriteLine();
+
+Console.Write("give me a date (gg/mm/yyyy) ");
+
+DateTime userDate = DateTime.Parse(Console.ReadLine());
+
+List<Event> eventsOfDate = program.FindEventsByDate(userDate);
+
+Console.WriteLine(ManageEvents.PrintEvents(eventsOfDate));
+
+program.ClearList();
 
 Event CreateEvent()
 {
@@ -41,7 +70,7 @@ void MakeReservation(Event evento)
     }catch(ExpiredException e)
     {
         Console.WriteLine(e.Message);
-        MakeReservation(newEvent);
+        MakeReservation(evento);
     }catch(ArgumentOutOfRangeException e)
     {
         Console.WriteLine(e.Message);
@@ -67,7 +96,7 @@ void IsCancelling(Event evento)
     else
     {
         Console.WriteLine("Understood");
-        newEvent.PrintSeats();
+        evento.PrintSeats();
     }
     
 }
@@ -91,5 +120,22 @@ void CancelReservation(Event evento)
     {
         Console.WriteLine(e.Message);
         CancelReservation(evento);
+    }
+}
+
+ManageEvents CreateProgram()
+{
+    Console.WriteLine("PROGRAM CREATION\n");
+    Console.Write("Insert program title: ");
+    string title = Console.ReadLine();
+    try
+    {
+        return new ManageEvents(title);
+        
+    }
+    catch(ArgumentException e)
+    {
+        Console.WriteLine(e.Message);
+        return CreateProgram();
     }
 }

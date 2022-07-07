@@ -8,17 +8,31 @@ namespace csharp_gestore_eventi
 {
     internal class ManageEvents
     {
-        public string title;
-        List<Event> events;
+        string title;
+        public List<Event> events;
         public ManageEvents(string title)
         {
             this.title = title;
             this.events = new List<Event>();
         }
 
+        public string Title
+        {
+            get { return title; }
+            private set 
+            { 
+                if(value.Trim() == "")
+                {
+                    throw new ArgumentException("title cannot be an empty string");
+                } 
+                title = value;
+            }
+        }
+
         public void AddEvent(Event selectedEvent)
         {
             this.events.Add(selectedEvent);
+            Console.WriteLine("Event Added");
         }
 
         public List<Event> FindEventsByDate(DateTime selectedDate)
@@ -39,7 +53,7 @@ namespace csharp_gestore_eventi
             string result = "";
             foreach (Event selectedEvent in eventsList)
             {
-                result += $"{selectedEvent.Date.ToString("dd/MM/yyyy")} - {selectedEvent.Title}\n";
+                result = result + $"{selectedEvent.Date.ToString("dd/MM/yyyy")} - {selectedEvent.Title}\n";
             }
             return result;
         }
@@ -47,6 +61,7 @@ namespace csharp_gestore_eventi
         public void ClearList()
         {
             this.events.Clear();
+            Console.WriteLine("all events deleted");
         }
 
         public override string ToString()
